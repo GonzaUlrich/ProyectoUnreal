@@ -43,13 +43,21 @@ void ACubeNode::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	
+
 }
 
-void ACubeNode::BeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	GEngine->AddOnScreenDebugMessage(-1, 1.f,FColor::Green, "Holas");
-	Destroy();
+void ACubeNode::BeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult){
+	//Aqui tendria que hacer un event que llame a la funcion ANodeMaster::DestroyAdjacentCubes
+	//por tiempo y desconocimiento del engine no logre llegar a completarlo 
+	//FirstPersonProjectile
+
+	if (OtherComp->GetFName()==(FName)"Sphere")
+	{
+		eventFunc = true;
+		actorDesrtoy = true;
+		Destroy();
+	}
+	
 }
 
 
@@ -62,8 +70,6 @@ void ACubeNode::Tick(float DeltaTime)
 
 void ACubeNode::SetID(int num) {
 
-	
-
 	ID = num;
 }
 
@@ -75,27 +81,39 @@ void ACubeNode::SetColor(int randColor)
 {
 	UMaterialInstanceDynamic* dynMat = UMaterialInstanceDynamic::Create(ColorRed, this);
 
-	switch (randColor)
-	{
+	switch (randColor){
 	case Red:
 		dynMat = UMaterialInstanceDynamic::Create(ColorRed, this);
 		BoxMesh->SetMaterial(0, dynMat);
+		colorNumber = Red;
 		break;
 
 	case Green:
 		dynMat = UMaterialInstanceDynamic::Create(ColorGreen, this);
 		BoxMesh->SetMaterial(0, dynMat);
+		colorNumber = Green;
 		break;
 
 	case Blue:
 		dynMat = UMaterialInstanceDynamic::Create(ColorBlue, this);
 		BoxMesh->SetMaterial(0, dynMat);
+		colorNumber = Blue;
 		break;
 
 	default:
 		break;
 	}
 }
+
+void ACubeNode::SetActorDestroy(bool set){
+	actorDesrtoy = set;
+}
+
+void ACubeNode::SetEventFunc(bool set)
+{
+	eventFunc = set;
+}
+
 
 int ACubeNode::GetID()
 {
@@ -105,4 +123,19 @@ int ACubeNode::GetID()
 int ACubeNode::GetLine()
 {
 	return line;
+}
+
+int ACubeNode::GetColor()
+{
+	return colorNumber;
+}
+
+bool ACubeNode::GetActorDestroy()
+{
+	return actorDesrtoy;
+}
+
+bool ACubeNode::GetEventFunc()
+{
+	return eventFunc;
 }

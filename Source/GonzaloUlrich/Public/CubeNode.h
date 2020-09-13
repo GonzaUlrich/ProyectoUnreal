@@ -32,6 +32,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	int ID = 0;
 	int line = 0;
+	int colorNumber = -1;
+	bool eventFunc = false;
+	bool actorDesrtoy = false;
 
 	UFUNCTION()
 	void BeginOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -54,9 +57,11 @@ public:
 	void SetID(int num);
 	void SetLine(int num);
 	void SetColor(int num);
+	void SetActorDestroy(bool set);
+	void SetEventFunc(bool set);
 	int GetID();
 	int GetLine();
-	//UFUNCTION()
-	//void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-
+	int GetColor();
+	bool GetActorDestroy();
+	bool GetEventFunc();
 };

@@ -7,6 +7,9 @@
 #include "GameFramework/Actor.h"
 #include "NodeMaster.generated.h"
 
+
+
+
 UCLASS()
 class GONZALOULRICH_API ANodeMaster : public AActor
 {
@@ -15,7 +18,7 @@ class GONZALOULRICH_API ANodeMaster : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ANodeMaster();
-
+	
 
 	UPROPERTY(EditAnywhere)
 		ACubeNode* SpawnCube;
@@ -23,10 +26,10 @@ public:
 	void SpawnAllNodes();
 
 	UPROPERTY(EditAnywhere)
-	int maxNumberOfCubesH=7;
+	int maxNumberOfCubesH=10;
 
 	UPROPERTY(EditAnywhere)
-	int maxNumberOfCubesW = 7;
+	int maxNumberOfCubesW = 10;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UStaticMeshComponent* StaticMesh;
@@ -38,8 +41,13 @@ protected:
 	virtual void BeginPlay() override;
 	
 	void BalanceDeRandom();
+	void DestroyAdjacentCubes(int line, int cubeID, int color);
+
+	void SortCubes();
+	void SortCubes(int line, int cubeID, int numTarray);
 	TArray <ACubeNode*> allCubes;
 	TArray <int> allRandomValues;
+
 
 public:	
 	// Called every frame
